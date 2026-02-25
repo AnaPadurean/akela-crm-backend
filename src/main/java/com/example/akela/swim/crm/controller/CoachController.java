@@ -3,7 +3,7 @@ package com.example.akela.swim.crm.controller;
 import com.example.akela.swim.crm.dto.CoachListDTO;
 import com.example.akela.swim.crm.dto.CreateUpdateCoachDTO;
 import com.example.akela.swim.crm.entity.CoachEntity;
-import com.example.akela.swim.crm.service.CoachService;
+import com.example.akela.swim.crm.service.coach.CoachService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -2,9 +2,12 @@ package com.example.akela.swim.crm.controller;
 
 import com.example.akela.swim.crm.dto.ReservationDTO;
 import com.example.akela.swim.crm.entity.*;
-import com.example.akela.swim.crm.service.*;
 import com.example.akela.swim.crm.service.children.ChildrenService;
-import com.example.akela.swim.crm.service.subscription.SubscriptionService;
+import com.example.akela.swim.crm.service.coach.CoachService;
+import com.example.akela.swim.crm.service.reservations.ReservationService;
+import com.example.akela.swim.crm.service.schedule.WeeklyTrainingSessionService;
+import com.example.akela.swim.crm.service.sessions.SessionService;
+import com.example.akela.swim.crm.service.subscriptions.SubscriptionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;

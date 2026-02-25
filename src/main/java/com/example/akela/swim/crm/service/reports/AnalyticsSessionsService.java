@@ -1,4 +1,4 @@
-package com.example.akela.swim.crm.service;
+package com.example.akela.swim.crm.service.reports;
 
 import com.example.akela.swim.crm.dto.MonthCountDTO;
 import com.example.akela.swim.crm.repository.SessionRepository;

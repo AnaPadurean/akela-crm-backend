@@ -3,12 +3,12 @@ package com.example.akela.swim.crm.controller.subscription;
 import com.example.akela.swim.crm.dto.CreateSubscriptionDTO;
 import com.example.akela.swim.crm.dto.subscription.SubscriptionDTO;
 import com.example.akela.swim.crm.entity.*;
-import com.example.akela.swim.crm.service.*;
 import com.example.akela.swim.crm.service.children.ChildrenService;
-import com.example.akela.swim.crm.service.subscription.SubscriptionPaymentService;
-import com.example.akela.swim.crm.service.subscription.SubscriptionPlanService;
-import com.example.akela.swim.crm.service.subscription.SubscriptionService;
-import com.example.akela.swim.crm.service.subscription.SubscriptionStatsService;
+import com.example.akela.swim.crm.service.coach.CoachService;
+import com.example.akela.swim.crm.service.subscriptions.SubscriptionPaymentService;
+import com.example.akela.swim.crm.service.subscriptions.SubscriptionPlanService;
+import com.example.akela.swim.crm.service.subscriptions.SubscriptionService;
+import com.example.akela.swim.crm.service.subscriptions.SubscriptionStatsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -122,6 +122,10 @@ public class SubscriptionController {
             dto.setRemainingSessions(remaining);
             dto.setStatus(s.getStatus() != null ? s.getStatus() : "ACTIV");
             dto.setIsPaid(Boolean.TRUE.equals(s.getIsPaid()));
+            if (Boolean.TRUE.equals(s.getIsPaid())) {
+                paymentService.findBySubscriptionId(s.getSubscriptionId())
+                        .ifPresent(p -> dto.setPaymentId(p.getPaymentId()));
+            }
 
             return dto;
         }).toList();

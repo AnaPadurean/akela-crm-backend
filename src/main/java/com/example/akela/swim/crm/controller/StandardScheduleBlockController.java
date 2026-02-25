@@ -2,7 +2,7 @@ package com.example.akela.swim.crm.controller;
 
 import com.example.akela.swim.crm.dto.StandardScheduleBlockBulkDTO;
 import com.example.akela.swim.crm.entity.StandardScheduleBlockEntity;
-import com.example.akela.swim.crm.service.StandardScheduleBlockService;
+import com.example.akela.swim.crm.service.schedule.StandardScheduleBlockService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

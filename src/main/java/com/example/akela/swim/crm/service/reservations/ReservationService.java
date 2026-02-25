@@ -1,4 +1,4 @@
-package com.example.akela.swim.crm.service;
+package com.example.akela.swim.crm.service.reservations;
 
 import com.example.akela.swim.crm.entity.ReservationEntity;
 import com.example.akela.swim.crm.repository.ReservationRepository;
@@ -46,11 +46,6 @@ public class ReservationService {
 
     public List<ReservationEntity> findBySubscriptionId(Long subscriptionId) {
         return reservationRepository
-                .findBySubscription_SubscriptionIdOrderByReservationDateTimeDesc(subscriptionId);
+                .findBySubscription_SubscriptionIdOrderByReservationDateTimeAsc(subscriptionId);
     }
-
-
-
-
-
 }

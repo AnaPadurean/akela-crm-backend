@@ -3,7 +3,7 @@ package com.example.akela.swim.crm.controller;
 import com.example.akela.swim.crm.dto.CreateExpenseDTO;
 import com.example.akela.swim.crm.dto.ExpenseDTO;
 import com.example.akela.swim.crm.entity.ExpenseEntity;
-import com.example.akela.swim.crm.service.ExpenseService;
+import com.example.akela.swim.crm.service.expenses.ExpenseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

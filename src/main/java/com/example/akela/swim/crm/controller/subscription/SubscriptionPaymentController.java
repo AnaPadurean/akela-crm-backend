@@ -3,7 +3,7 @@ package com.example.akela.swim.crm.controller.subscription;
 import com.example.akela.swim.crm.dto.CreatePaymentDTO;
 import com.example.akela.swim.crm.dto.PaymentDTO;
 import com.example.akela.swim.crm.entity.SubscriptionPaymentEntity;
-import com.example.akela.swim.crm.service.subscription.SubscriptionPaymentService;
+import com.example.akela.swim.crm.service.subscriptions.SubscriptionPaymentService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -186,5 +186,11 @@ public class SubscriptionPaymentController {
                 });
 
         return ResponseEntity.ok(page);
+    }
+
+    @DeleteMapping("/payments/{id}")
+    public ResponseEntity<Void> deletePayment(@PathVariable("id") Long paymentId) {
+        paymentService.deletePayment(paymentId);
+        return ResponseEntity.noContent().build();
     }
 }

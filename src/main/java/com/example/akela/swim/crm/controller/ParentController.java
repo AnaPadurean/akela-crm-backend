@@ -3,7 +3,7 @@ package com.example.akela.swim.crm.controller;
 import com.example.akela.swim.crm.dto.parents.ParentListDTO;
 import com.example.akela.swim.crm.dto.parents.ParentWithChildrenDTO;
 import com.example.akela.swim.crm.entity.ParentEntity;
-import com.example.akela.swim.crm.service.ParentService;
+import com.example.akela.swim.crm.service.parents.ParentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

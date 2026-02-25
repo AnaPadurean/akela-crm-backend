@@ -1,4 +1,4 @@
-package com.example.akela.swim.crm.service;
+package com.example.akela.swim.crm.service.parents;
 
 import com.example.akela.swim.crm.dto.parents.ParentListDTO;
 import com.example.akela.swim.crm.dto.parents.ParentWithChildrenDTO;

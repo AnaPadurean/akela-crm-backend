@@ -1,4 +1,4 @@
-package com.example.akela.swim.crm.service.subscription;
+package com.example.akela.swim.crm.service.subscriptions;
 
 import com.example.akela.swim.crm.repository.SubscriptionRepository;
 import org.springframework.stereotype.Service;

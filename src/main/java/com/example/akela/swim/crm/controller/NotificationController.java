@@ -1,7 +1,7 @@
 package com.example.akela.swim.crm.controller;
 
 import com.example.akela.swim.crm.dto.NotificationDTO;
-import com.example.akela.swim.crm.service.NotificationService;
+import com.example.akela.swim.crm.service.notifications.NotificationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

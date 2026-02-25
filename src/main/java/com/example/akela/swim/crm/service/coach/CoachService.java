@@ -1,4 +1,4 @@
-package com.example.akela.swim.crm.service;
+package com.example.akela.swim.crm.service.coach;
 
 import com.example.akela.swim.crm.dto.CoachListDTO;
 import com.example.akela.swim.crm.dto.CoachOptionDto;

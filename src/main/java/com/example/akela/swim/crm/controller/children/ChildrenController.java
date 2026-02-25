@@ -4,7 +4,7 @@ import com.example.akela.swim.crm.dto.children.ChildWithCoachesAndSubscriptionsD
 import com.example.akela.swim.crm.entity.ChildrenEntity;
 import com.example.akela.swim.crm.service.children.ChildrenService;
 import com.example.akela.swim.crm.service.children.ChildrenStatsService;
-import com.example.akela.swim.crm.service.subscription.SubscriptionService;
+import com.example.akela.swim.crm.service.subscriptions.SubscriptionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -2,7 +2,7 @@ package com.example.akela.swim.crm.controller.subscription;
 
 import com.example.akela.swim.crm.dto.subscription.SubscriptionTypeDTO;
 import com.example.akela.swim.crm.entity.SubscriptionTypeEntity;
-import com.example.akela.swim.crm.service.subscription.SubscriptionTypeService;
+import com.example.akela.swim.crm.service.subscriptions.SubscriptionTypeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -2,7 +2,7 @@ package com.example.akela.swim.crm.controller;
 
 import com.example.akela.swim.crm.dto.StandardTrainingSessionDTO;
 import com.example.akela.swim.crm.entity.StandardTrainingSessionEntity;
-import com.example.akela.swim.crm.service.StandardTrainingSessionService;
+import com.example.akela.swim.crm.service.schedule.StandardTrainingSessionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -3,7 +3,7 @@ package com.example.akela.swim.crm.controller;
 import com.example.akela.swim.crm.dto.ConfirmWeeklySessionDTO;
 import com.example.akela.swim.crm.dto.WeeklyTrainingSessionDTO;
 import com.example.akela.swim.crm.entity.WeeklyTrainingSessionEntity;
-import com.example.akela.swim.crm.service.WeeklyTrainingSessionService;
+import com.example.akela.swim.crm.service.schedule.WeeklyTrainingSessionService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 

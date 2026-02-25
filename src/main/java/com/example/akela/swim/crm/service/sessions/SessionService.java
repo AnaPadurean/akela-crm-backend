@@ -1,10 +1,11 @@
-package com.example.akela.swim.crm.service;
+package com.example.akela.swim.crm.service.sessions;
 
 import com.example.akela.swim.crm.entity.ReservationEntity;
 import com.example.akela.swim.crm.entity.SessionEntity;
 import com.example.akela.swim.crm.entity.SubscriptionEntity;
 import com.example.akela.swim.crm.repository.SessionRepository;
-import com.example.akela.swim.crm.service.subscription.SubscriptionService;
+import com.example.akela.swim.crm.service.reservations.ReservationService;
+import com.example.akela.swim.crm.service.subscriptions.SubscriptionService;
 import org.springframework.stereotype.Service;
 import com.example.akela.swim.crm.model.SessionDayFilter;
 import org.springframework.transaction.annotation.Transactional;

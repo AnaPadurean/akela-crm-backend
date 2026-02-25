@@ -1,7 +1,7 @@
 package com.example.akela.swim.crm.controller;
 
 import com.example.akela.swim.crm.dto.CoachOptionDto;
-import com.example.akela.swim.crm.service.CoachService;
+import com.example.akela.swim.crm.service.coach.CoachService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

@@ -27,7 +27,7 @@ AND   (COALESCE(:endDate, r.reservationDateTime) >= r.reservationDateTime)
     boolean existsByWeeklyTrainingSession_Id(Long weeklySessionId);
     void deleteByWeeklyTrainingSession_Id(Long weeklySessionId);
 
-    List<ReservationEntity> findBySubscription_SubscriptionIdOrderByReservationDateTimeDesc(Long subscriptionId);
+    List<ReservationEntity> findBySubscription_SubscriptionIdOrderByReservationDateTimeAsc(Long subscriptionId);
 
 
 

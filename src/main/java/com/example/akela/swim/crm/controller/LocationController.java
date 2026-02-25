@@ -1,8 +1,8 @@
 package com.example.akela.swim.crm.controller;
 
 import com.example.akela.swim.crm.entity.LocationEntity;
-import com.example.akela.swim.crm.service.LocationService;
-import com.example.akela.swim.crm.service.LocationStatsService;
+import com.example.akela.swim.crm.service.locations.LocationService;
+import com.example.akela.swim.crm.service.locations.LocationStatsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

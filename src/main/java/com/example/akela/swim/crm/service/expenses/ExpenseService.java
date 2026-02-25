@@ -1,4 +1,4 @@
-package com.example.akela.swim.crm.service;
+package com.example.akela.swim.crm.service.expenses;
 
 import com.example.akela.swim.crm.entity.ExpenseEntity;
 import com.example.akela.swim.crm.repository.ExpenseRepository;

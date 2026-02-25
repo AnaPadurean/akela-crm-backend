@@ -1,4 +1,4 @@
-package com.example.akela.swim.crm.service;
+package com.example.akela.swim.crm.service.notifications;
 
 import com.example.akela.swim.crm.dto.NotificationDTO;
 import com.example.akela.swim.crm.entity.SubscriptionEntity;

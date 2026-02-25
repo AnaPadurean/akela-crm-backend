@@ -1,4 +1,4 @@
-package com.example.akela.swim.crm.service;
+package com.example.akela.swim.crm.service.schedule;
 
 import com.example.akela.swim.crm.dto.ConfirmWeeklySessionDTO;
 import com.example.akela.swim.crm.dto.WeeklyTrainingSessionDTO;
@@ -7,8 +7,11 @@ import com.example.akela.swim.crm.entity.WeeklyTrainingSessionEntity;
 import com.example.akela.swim.crm.repository.ReservationRepository;
 import com.example.akela.swim.crm.repository.StandardTrainingSessionRepository;
 import com.example.akela.swim.crm.repository.WeeklyTrainingSessionRepository;
+import com.example.akela.swim.crm.service.coach.CoachService;
+import com.example.akela.swim.crm.service.reservations.ReservationService;
+import com.example.akela.swim.crm.service.sessions.SessionService;
 import com.example.akela.swim.crm.service.children.ChildrenService;
-import com.example.akela.swim.crm.service.subscription.SubscriptionService;
+import com.example.akela.swim.crm.service.subscriptions.SubscriptionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -7,7 +7,7 @@ import com.example.akela.swim.crm.dto.SaveChildWithParentsDTO;
 import com.example.akela.swim.crm.entity.ChildParentAssocEntity;
 import com.example.akela.swim.crm.entity.ChildrenEntity;
 import com.example.akela.swim.crm.entity.ParentEntity;
-import com.example.akela.swim.crm.service.ParentService;
+import com.example.akela.swim.crm.service.parents.ParentService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 

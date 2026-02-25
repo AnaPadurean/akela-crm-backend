@@ -1,4 +1,4 @@
-package com.example.akela.swim.crm.service.subscription;
+package com.example.akela.swim.crm.service.subscriptions;
 
 import com.example.akela.swim.crm.dto.CreatePaymentDTO;
 import com.example.akela.swim.crm.entity.SubscriptionEntity;
@@ -103,6 +103,19 @@ public class SubscriptionPaymentService {
             q = null;
         }
         return paymentRepo.search(q, from, to, pageable);
+    }
+
+    @Transactional
+    public void deletePayment(Long paymentId) {
+        SubscriptionPaymentEntity p = paymentRepo.findById(paymentId)
+                .orElseThrow(() -> new EntityNotFoundException("Payment not found"));
+
+        SubscriptionEntity sub = p.getSubscription();
+
+        paymentRepo.delete(p);
+
+        sub.setIsPaid(false);
+        subscriptionService.save(sub);
     }
 
 

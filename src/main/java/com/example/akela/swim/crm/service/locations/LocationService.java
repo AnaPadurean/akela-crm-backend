@@ -1,4 +1,4 @@
-package com.example.akela.swim.crm.service;
+package com.example.akela.swim.crm.service.locations;
 
 import com.example.akela.swim.crm.entity.LocationEntity;
 import com.example.akela.swim.crm.repository.LocationRepository;

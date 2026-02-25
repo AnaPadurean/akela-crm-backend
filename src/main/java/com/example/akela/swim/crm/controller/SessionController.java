@@ -5,10 +5,10 @@ import com.example.akela.swim.crm.dto.SessionDTO;
 import com.example.akela.swim.crm.entity.SessionEntity;
 import com.example.akela.swim.crm.entity.SubscriptionEntity;
 import com.example.akela.swim.crm.model.SessionDayFilter;
-import com.example.akela.swim.crm.service.AnalyticsSessionsService;
-import com.example.akela.swim.crm.service.ReservationService;
-import com.example.akela.swim.crm.service.SessionService;
-import com.example.akela.swim.crm.service.subscription.SubscriptionService;
+import com.example.akela.swim.crm.service.reports.AnalyticsSessionsService;
+import com.example.akela.swim.crm.service.reservations.ReservationService;
+import com.example.akela.swim.crm.service.sessions.SessionService;
+import com.example.akela.swim.crm.service.subscriptions.SubscriptionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
