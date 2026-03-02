@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class ChildDTO {
-    private Long childId; // null la ADD
+    private Long childId;
     private String childFirstName;
     private String childLastName;
     private String rawBirthday;

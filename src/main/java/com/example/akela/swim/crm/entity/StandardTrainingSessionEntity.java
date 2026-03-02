@@ -2,10 +2,15 @@ package com.example.akela.swim.crm.entity;
 
 import com.example.akela.swim.crm.utils.LongListConverter;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "standard_training_session")
 public class StandardTrainingSessionEntity {
@@ -34,59 +39,4 @@ public class StandardTrainingSessionEntity {
     @Column(name = "notes")
     private String notes;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public List<Long> getChildIds() {
-        return childIds;
-    }
-
-    public void setChildIds(List<Long> childIds) {
-        this.childIds = childIds;
-    }
-
-    public Long getCoachId() {
-        return coachId;
-    }
-
-    public void setCoachId(Long coachId) {
-        this.coachId = coachId;
-    }
-
-    public Integer getDayOfWeek() {
-        return dayOfWeek;
-    }
-
-    public void setDayOfWeek(Integer dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
-    }
-
-    public LocalTime getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(LocalTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public LocalTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalTime endTime) {
-        this.endTime = endTime;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
 }

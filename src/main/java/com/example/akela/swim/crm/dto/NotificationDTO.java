@@ -3,6 +3,7 @@ package com.example.akela.swim.crm.dto;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+
 @Data
 public class NotificationDTO {
     private String message;
@@ -11,7 +12,8 @@ public class NotificationDTO {
     private String route;
     private LocalDateTime time;
 
-    public NotificationDTO() {}
+    public NotificationDTO() {
+    }
 
 
 }

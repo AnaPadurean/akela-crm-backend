@@ -10,4 +10,5 @@ public record CreateCoachUserRequest(
         @NotBlank @Email String email,
         @NotBlank String password,
         boolean forceChangePassword
-) {}
+) {
+}

@@ -27,10 +27,7 @@ public class ChildWithParentsController {
     }
 
     @PutMapping("/{childId}")
-    public ResponseEntity<Void> update(
-            @PathVariable Long childId,
-            @RequestBody SaveChildWithParentsDTO dto
-    ) {
+    public ResponseEntity<Void> update(@PathVariable Long childId, @RequestBody SaveChildWithParentsDTO dto) {
         dto.getChild().setChildId(childId);
         service.save(dto);
         return ResponseEntity.ok().build();

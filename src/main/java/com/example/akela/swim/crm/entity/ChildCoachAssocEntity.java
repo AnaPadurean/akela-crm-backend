@@ -3,10 +3,14 @@ package com.example.akela.swim.crm.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Objects;
 
 
+@Setter
+@Getter
 @Entity
 @Table(name = "akl_assoc_coach_children")
 public class ChildCoachAssocEntity {
@@ -26,39 +30,7 @@ public class ChildCoachAssocEntity {
     @JsonIgnore
     private CoachEntity coach;
 
-    private String trainingType; // ex: "Swimming Lessons", "Competition Prep"
-
-    public Long getCoachChildId() {
-        return coachChildId;
-    }
-
-    public void setCoachChildId(Long coachChildId) {
-        this.coachChildId = coachChildId;
-    }
-
-    public ChildrenEntity getChild() {
-        return child;
-    }
-
-    public void setChild(ChildrenEntity child) {
-        this.child = child;
-    }
-
-    public CoachEntity getCoach() {
-        return coach;
-    }
-
-    public void setCoach(CoachEntity coach) {
-        this.coach = coach;
-    }
-
-    public String getTrainingType() {
-        return trainingType;
-    }
-
-    public void setTrainingType(String trainingType) {
-        this.trainingType = trainingType;
-    }
+    private String trainingType;
 
     @Override
     public boolean equals(Object o) {

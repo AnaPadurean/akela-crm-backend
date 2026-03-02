@@ -21,5 +21,5 @@ public class NotificationController {
     public ResponseEntity<List<NotificationDTO>> warnings() {
         return ResponseEntity.ok(notificationService.getWarnings());
     }
-//    test commit/push
+
 }

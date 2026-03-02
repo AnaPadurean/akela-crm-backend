@@ -24,11 +24,31 @@ public class CoachListDTO {
         this.locationIds = locationIds;
     }
 
-    public Long getCoachId() { return coachId; }
-    public String getCoachFirstName() { return coachFirstName; }
-    public String getCoachLastName() { return coachLastName; }
-    public String getPhone() { return phone; }
-    public String getEmail() { return email; }
-    public String getAddress() { return address; }
-    public List<Long> getLocationIds() { return locationIds; }
+    public Long getCoachId() {
+        return coachId;
+    }
+
+    public String getCoachFirstName() {
+        return coachFirstName;
+    }
+
+    public String getCoachLastName() {
+        return coachLastName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public List<Long> getLocationIds() {
+        return locationIds;
+    }
 }

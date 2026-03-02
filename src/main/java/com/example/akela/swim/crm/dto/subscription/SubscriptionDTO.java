@@ -8,14 +8,11 @@ public class SubscriptionDTO {
     private String childFullName;
     private String coachFullName;
     private String planName;
-//    private LocalDate startDate;
-//    private LocalDate endDate;
     private Integer totalSessions;
     private Integer completedSessions;
     private Integer remainingSessions;
     private String status;
     private Boolean isPaid;
     private Long paymentId;
-
 
 }

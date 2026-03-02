@@ -1,4 +1,4 @@
-package com.example.akela.swim.crm.controller;
+package com.example.akela.swim.crm.controller.schedule;
 
 import com.example.akela.swim.crm.dto.StandardScheduleBlockBulkDTO;
 import com.example.akela.swim.crm.entity.StandardScheduleBlockEntity;

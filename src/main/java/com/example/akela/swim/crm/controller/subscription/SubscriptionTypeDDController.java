@@ -21,18 +21,15 @@ public class SubscriptionTypeDDController {
 
     @GetMapping
     public ResponseEntity<List<SubscriptionTypeDTO>> getAllSubscriptionTypes() {
-        List<SubscriptionTypeDTO> dtos = subscriptionTypeService.findAll()
-                .stream()
-                .map(type -> {
-                    SubscriptionTypeDTO dto = new SubscriptionTypeDTO();
-                    dto.setSubscriptionTypeId(type.getSubscriptionTypeId());
-                    dto.setCode(type.getCode());
-                    dto.setName(type.getName());
-                    dto.setMaxChildren(type.getMaxChildren());
-                    dto.setDescription(type.getDescription());
-                    return dto;
-                })
-                .toList();
+        List<SubscriptionTypeDTO> dtos = subscriptionTypeService.findAll().stream().map(type -> {
+            SubscriptionTypeDTO dto = new SubscriptionTypeDTO();
+            dto.setSubscriptionTypeId(type.getSubscriptionTypeId());
+            dto.setCode(type.getCode());
+            dto.setName(type.getName());
+            dto.setMaxChildren(type.getMaxChildren());
+            dto.setDescription(type.getDescription());
+            return dto;
+        }).toList();
 
         return ResponseEntity.ok(dtos);
     }
@@ -40,9 +37,7 @@ public class SubscriptionTypeDDController {
 
     @GetMapping("/{id}")
     public ResponseEntity<SubscriptionTypeEntity> getSubscriptionTypeById(@PathVariable Long id) {
-        return subscriptionTypeService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return subscriptionTypeService.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -52,12 +47,10 @@ public class SubscriptionTypeDDController {
 
     @PutMapping("/{id}")
     public ResponseEntity<SubscriptionTypeEntity> updateSubscriptionType(@PathVariable Long id, @RequestBody SubscriptionTypeEntity subscriptionTypeEntity) {
-        return subscriptionTypeService.findById(id)
-                .map(existing -> {
-                    subscriptionTypeEntity.setSubscriptionTypeId(id);
-                    return ResponseEntity.ok(subscriptionTypeService.save(subscriptionTypeEntity));
-                })
-                .orElse(ResponseEntity.notFound().build());
+        return subscriptionTypeService.findById(id).map(existing -> {
+            subscriptionTypeEntity.setSubscriptionTypeId(id);
+            return ResponseEntity.ok(subscriptionTypeService.save(subscriptionTypeEntity));
+        }).orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")

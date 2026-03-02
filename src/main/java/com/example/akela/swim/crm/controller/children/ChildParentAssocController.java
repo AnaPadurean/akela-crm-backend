@@ -73,7 +73,6 @@ public class ChildParentAssocController {
     }
 
 
-
     @PutMapping("/{id}")
     public ResponseEntity<ChildParentAssocEntity> updateChildParentAssoc(@PathVariable Long id, @RequestBody ChildParentAssocEntity childParentAssocEntity) {
         return childParentAssocService.findById(id)
@@ -106,7 +105,4 @@ public class ChildParentAssocController {
 
         return ResponseEntity.ok(result);
     }
-
-
-
 }

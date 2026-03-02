@@ -1,7 +1,12 @@
 package com.example.akela.swim.crm.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 
+@Setter
+@Getter
 public class CreateUpdateCoachDTO {
 
     private String coachFirstName;
@@ -12,21 +17,4 @@ public class CreateUpdateCoachDTO {
 
     private List<Long> locationIds;
 
-    public String getCoachFirstName() { return coachFirstName; }
-    public void setCoachFirstName(String coachFirstName) { this.coachFirstName = coachFirstName; }
-
-    public String getCoachLastName() { return coachLastName; }
-    public void setCoachLastName(String coachLastName) { this.coachLastName = coachLastName; }
-
-    public String getPhone() { return phone; }
-    public void setPhone(String phone) { this.phone = phone; }
-
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-
-    public String getAddress() { return address; }
-    public void setAddress(String address) { this.address = address; }
-
-    public List<Long> getLocationIds() { return locationIds; }
-    public void setLocationIds(List<Long> locationIds) { this.locationIds = locationIds; }
 }

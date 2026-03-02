@@ -23,8 +23,6 @@ public class LocationController {
         this.statsService = statsService;
     }
 
-    // ========================= GET =========================
-
     @GetMapping
     public ResponseEntity<List<LocationEntity>> getAll() {
         return ResponseEntity.ok(service.findAll());
@@ -35,15 +33,12 @@ public class LocationController {
         return ResponseEntity.ok(statsService.getActiveLocationsCount());
     }
 
-    // ========================= CREATE =========================
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody LocationEntity entity) {
 
         if (entity.getName() == null || entity.getName().trim().isEmpty()) {
-            return ResponseEntity.badRequest().body(
-                    Map.of("code", "VALIDATION_ERROR", "message", "Name is required")
-            );
+            return ResponseEntity.badRequest().body(Map.of("code", "VALIDATION_ERROR", "message", "Name is required"));
         }
 
         String nameNorm = service.normalizeName(entity.getName());
@@ -52,14 +47,7 @@ public class LocationController {
         if (existingOpt.isPresent()) {
             var existing = existingOpt.get();
 
-            return ResponseEntity.status(409).body(
-                    Map.of(
-                            "code", "LOCATION_EXISTS",
-                            "locationId", existing.getLocationId(),
-                            "name", existing.getName(),
-                            "active", existing.getActive() != null ? existing.getActive() : false
-                    )
-            );
+            return ResponseEntity.status(409).body(Map.of("code", "LOCATION_EXISTS", "locationId", existing.getLocationId(), "name", existing.getName(), "active", existing.getActive() != null ? existing.getActive() : false));
         }
 
         entity.setNameNorm(nameNorm);
@@ -70,15 +58,12 @@ public class LocationController {
         return ResponseEntity.ok(service.save(entity));
     }
 
-    // ========================= UPDATE =========================
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody LocationEntity entity) {
 
         if (entity.getName() == null || entity.getName().trim().isEmpty()) {
-            return ResponseEntity.badRequest().body(
-                    Map.of("code", "VALIDATION_ERROR", "message", "Name is required")
-            );
+            return ResponseEntity.badRequest().body(Map.of("code", "VALIDATION_ERROR", "message", "Name is required"));
         }
 
         var existing = service.findById(id).orElse(null);
@@ -88,19 +73,11 @@ public class LocationController {
 
         String nameNorm = service.normalizeName(entity.getName());
 
-        // verifici dacă redenumește într-un nume folosit de ALTĂ locație
         var sameNameOpt = service.findByNameNorm(nameNorm);
         if (sameNameOpt.isPresent() && !sameNameOpt.get().getLocationId().equals(id)) {
             var other = sameNameOpt.get();
 
-            return ResponseEntity.status(409).body(
-                    Map.of(
-                            "code", "LOCATION_EXISTS",
-                            "locationId", other.getLocationId(),
-                            "name", other.getName(),
-                            "active", other.getActive() != null ? other.getActive() : false
-                    )
-            );
+            return ResponseEntity.status(409).body(Map.of("code", "LOCATION_EXISTS", "locationId", other.getLocationId(), "name", other.getName(), "active", other.getActive() != null ? other.getActive() : false));
         }
 
         existing.setName(entity.getName());
@@ -110,8 +87,6 @@ public class LocationController {
 
         return ResponseEntity.ok(service.save(existing));
     }
-
-    // ========================= DELETE =========================
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {

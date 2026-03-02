@@ -2,11 +2,15 @@ package com.example.akela.swim.crm.entity;
 
 import com.example.akela.swim.crm.utils.LongListConverter;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "weekly_training_session")
 public class WeeklyTrainingSessionEntity {
@@ -42,37 +46,6 @@ public class WeeklyTrainingSessionEntity {
 
     @Column(name = "confirmed", nullable = false)
     private boolean confirmed = false;
-
-    // ---- GETTERS & SETTERS ----
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public List<Long> getChildIds() { return childIds; }
-    public void setChildIds(List<Long> childIds) { this.childIds = childIds; }
-
-    public Long getCoachId() { return coachId; }
-    public void setCoachId(Long coachId) { this.coachId = coachId; }
-
-    public LocalDateTime getStartDateTime() { return startDateTime; }
-    public void setStartDateTime(LocalDateTime startDateTime) { this.startDateTime = startDateTime; }
-
-    public LocalDateTime getEndDateTime() { return endDateTime; }
-    public void setEndDateTime(LocalDateTime endDateTime) { this.endDateTime = endDateTime; }
-
-    public String getNotes() { return notes; }
-    public void setNotes(String notes) { this.notes = notes; }
-
-    public Long getSourceStandardId() { return sourceStandardId; }
-    public void setSourceStandardId(Long sourceStandardId) { this.sourceStandardId = sourceStandardId; }
-
-    public boolean isManualOverride() { return manualOverride; }
-    public void setManualOverride(boolean manualOverride) { this.manualOverride = manualOverride; }
-
-    public LocalDate getWeekStartDate() { return weekStartDate; }
-    public void setWeekStartDate(LocalDate weekStartDate) { this.weekStartDate = weekStartDate; }
-
-    public boolean isConfirmed() { return confirmed; }
-    public void setConfirmed(boolean confirmed) { this.confirmed = confirmed; }
 
 }
 

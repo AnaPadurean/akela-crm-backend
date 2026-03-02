@@ -23,6 +23,4 @@ public class ParentDetailsDTO {
         this.legalGuardian = legalGuardian;
         this.address = address;
     }
-
-
 }

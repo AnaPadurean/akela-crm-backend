@@ -6,4 +6,5 @@ public record CreateCoachUserResponse(
         String role,
         String status,
         Long coachId
-) {}
+) {
+}

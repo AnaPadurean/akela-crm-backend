@@ -45,33 +45,24 @@ public class ChildrenController {
             dto.setChildLastName(child.getChildLastName());
             dto.setBirthday(child.getBirthday());
 
-            // 🔹 Antrenori
-            List<Map<String, Object>> coachList = child.getCoachChildren().stream()
-                    .filter(cc -> cc.getCoach() != null)
-                    .map(cc -> {
-                        Map<String, Object> map = new HashMap<>();
-                        map.put("coachId", cc.getCoach().getCoachId());
-                        map.put("coachFullName", cc.getCoach().getCoachLastName() + " " + cc.getCoach().getCoachFirstName());
-                        return map;
-                    })
-                    .collect(Collectors.toList());
+            List<Map<String, Object>> coachList = child.getCoachChildren().stream().filter(cc -> cc.getCoach() != null).map(cc -> {
+                Map<String, Object> map = new HashMap<>();
+                map.put("coachId", cc.getCoach().getCoachId());
+                map.put("coachFullName", cc.getCoach().getCoachLastName() + " " + cc.getCoach().getCoachFirstName());
+                return map;
+            }).collect(Collectors.toList());
 
             dto.setCoachChildren(coachList);
 
-            // 🔹 Abonamente active
-            List<Map<String, Object>> subscriptionList = subscriptionService.findByChildId(child.getChildId()).stream()
-                    .filter(sub -> sub.getStatus().equalsIgnoreCase("ACTIV"))
-                    .map(sub -> {
-                        Map<String, Object> map = new HashMap<>();
-                        map.put("subscriptionId", sub.getSubscriptionId());
-                        map.put("planName", sub.getPlan().getSubscriptionType().getName() +
-                                " (" + sub.getPlan().getSessions() + " ședințe / " + sub.getPlan().getPrice() + " lei)");
-                        map.put("remainingSessions", sub.getRemainingSessions());
-                        map.put("status", sub.getStatus());
-                        map.put("totalSessions", sub.getPlan().getSessions());
-                        return map;
-                    })
-                    .collect(Collectors.toList());
+            List<Map<String, Object>> subscriptionList = subscriptionService.findByChildId(child.getChildId()).stream().filter(sub -> sub.getStatus().equalsIgnoreCase("ACTIV")).map(sub -> {
+                Map<String, Object> map = new HashMap<>();
+                map.put("subscriptionId", sub.getSubscriptionId());
+                map.put("planName", sub.getPlan().getSubscriptionType().getName() + " (" + sub.getPlan().getSessions() + " ședințe / " + sub.getPlan().getPrice() + " lei)");
+                map.put("remainingSessions", sub.getRemainingSessions());
+                map.put("status", sub.getStatus());
+                map.put("totalSessions", sub.getPlan().getSessions());
+                return map;
+            }).collect(Collectors.toList());
 
             dto.setSubscriptions(subscriptionList);
 
@@ -88,9 +79,7 @@ public class ChildrenController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ChildrenEntity> getChildById(@PathVariable Long id) {
-        return childrenService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return childrenService.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -100,12 +89,10 @@ public class ChildrenController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ChildrenEntity> updateChild(@PathVariable Long id, @RequestBody ChildrenEntity updatedChild) {
-        return childrenService.findById(id)
-                .map(existing -> {
-                    updatedChild.setChildId(id);
-                    return ResponseEntity.ok(childrenService.save(updatedChild));
-                })
-                .orElse(ResponseEntity.notFound().build());
+        return childrenService.findById(id).map(existing -> {
+            updatedChild.setChildId(id);
+            return ResponseEntity.ok(childrenService.save(updatedChild));
+        }).orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
@@ -113,10 +100,4 @@ public class ChildrenController {
         childrenService.delete(id);
         return ResponseEntity.noContent().build();
     }
-
-//    @GetMapping("/with-parents")
-//    public ResponseEntity<List<ChildWithParentsDTO>> getAllChildrenWithParents() {
-//        return ResponseEntity.ok(childrenService.findAllAsDto());
-//    }
-
 }

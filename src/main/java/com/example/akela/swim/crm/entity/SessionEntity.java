@@ -2,9 +2,13 @@ package com.example.akela.swim.crm.entity;
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "akl_sessions")
 public class SessionEntity {
@@ -25,51 +29,4 @@ public class SessionEntity {
     @OneToOne(mappedBy = "session", cascade = CascadeType.ALL, orphanRemoval = true)
     private ReservationEntity reservation;
 
-    public Long getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(Long sessionId) {
-        this.sessionId = sessionId;
-    }
-
-    public SubscriptionEntity getSubscription() {
-        return subscription;
-    }
-
-    public void setSubscription(SubscriptionEntity subscription) {
-        this.subscription = subscription;
-    }
-
-    public LocalDateTime getScheduledDate() {
-        return scheduledDate;
-    }
-
-    public void setScheduledDate(LocalDateTime scheduledDate) {
-        this.scheduledDate = scheduledDate;
-    }
-
-    public Boolean getCompleted() {
-        return completed;
-    }
-
-    public void setCompleted(Boolean completed) {
-        this.completed = completed;
-    }
-
-    public Boolean getCanceled() {
-        return canceled;
-    }
-
-    public void setCanceled(Boolean canceled) {
-        this.canceled = canceled;
-    }
-
-    public ReservationEntity getReservation() {
-        return reservation;
-    }
-
-    public void setReservation(ReservationEntity reservation) {
-        this.reservation = reservation;
-    }
 }

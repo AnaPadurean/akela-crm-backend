@@ -10,8 +10,7 @@ public class ChildCoachAssocDTO {
     String childFirstName;
     String childLastName;
 
-    public ChildCoachAssocDTO(Long coachChildId, Long childId, String trainingType,
-                              String childFirstName, String childLastName) {
+    public ChildCoachAssocDTO(Long coachChildId, Long childId, String trainingType, String childFirstName, String childLastName) {
         this.coachChildId = coachChildId;
         this.childId = childId;
         this.trainingType = trainingType;

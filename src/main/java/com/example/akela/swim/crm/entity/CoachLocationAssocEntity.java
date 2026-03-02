@@ -1,7 +1,11 @@
 package com.example.akela.swim.crm.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 @Entity
 @Table(
         name = "akl_assoc_coach_location",
@@ -27,15 +31,4 @@ public class CoachLocationAssocEntity {
     @Column(nullable = false)
     private Boolean active = true;
 
-    public Long getCoachLocationAssocId() { return coachLocationAssocId; }
-    public void setCoachLocationAssocId(Long coachLocationAssocId) { this.coachLocationAssocId = coachLocationAssocId; }
-
-    public CoachEntity getCoach() { return coach; }
-    public void setCoach(CoachEntity coach) { this.coach = coach; }
-
-    public LocationEntity getLocation() { return location; }
-    public void setLocation(LocationEntity location) { this.location = location; }
-
-    public Boolean getActive() { return active; }
-    public void setActive(Boolean active) { this.active = active; }
 }

@@ -24,9 +24,7 @@ public class SessionController {
     private final ReservationService reservationService;
     private final AnalyticsSessionsService analyticsSessionsService;
 
-    public SessionController(SessionService sessionService,
-                             SubscriptionService subscriptionService,
-                             ReservationService reservationService, AnalyticsSessionsService analyticsSessionsService) {
+    public SessionController(SessionService sessionService, SubscriptionService subscriptionService, ReservationService reservationService, AnalyticsSessionsService analyticsSessionsService) {
         this.sessionService = sessionService;
         this.subscriptionService = subscriptionService;
         this.reservationService = reservationService;
@@ -40,7 +38,6 @@ public class SessionController {
         dto.setCompleted(s.getCompleted());
         dto.setCanceled(s.getCanceled());
 
-        // subscription details
         if (s.getSubscription() != null) {
             SubscriptionEntity sub = s.getSubscription();
             dto.setSubscriptionId(sub.getSubscriptionId());
@@ -56,36 +53,26 @@ public class SessionController {
 
         if (s.getReservation() != null && s.getReservation().getCoach() != null) {
             dto.setCoachId(s.getReservation().getCoach().getCoachId());
-            dto.setCoachFullName(
-                    s.getReservation().getCoach().getCoachLastName() + " " + s.getReservation().getCoach().getCoachFirstName()
-            );
+            dto.setCoachFullName(s.getReservation().getCoach().getCoachLastName() + " " + s.getReservation().getCoach().getCoachFirstName());
         } else if (s.getSubscription() != null && s.getSubscription().getCoach() != null) {
             dto.setCoachId(s.getSubscription().getCoach().getCoachId());
-            dto.setCoachFullName(
-                    s.getSubscription().getCoach().getCoachLastName() + " " + s.getSubscription().getCoach().getCoachFirstName()
-            );
+            dto.setCoachFullName(s.getSubscription().getCoach().getCoachLastName() + " " + s.getSubscription().getCoach().getCoachFirstName());
         }
 
         return dto;
     }
 
 
-
     @GetMapping
     public ResponseEntity<List<SessionDTO>> getAllSessions() {
-        List<SessionDTO> dtos = sessionService.findAll()
-                .stream()
-                .map(this::toDto)
-                .toList();
+        List<SessionDTO> dtos = sessionService.findAll().stream().map(this::toDto).toList();
         return ResponseEntity.ok(dtos);
     }
 
 
     @GetMapping("/{id}")
     public ResponseEntity<SessionDTO> getSessionById(@PathVariable Long id) {
-        return sessionService.findById(id)
-                .map(s -> ResponseEntity.ok(toDto(s)))
-                .orElse(ResponseEntity.notFound().build());
+        return sessionService.findById(id).map(s -> ResponseEntity.ok(toDto(s))).orElse(ResponseEntity.notFound().build());
     }
 
 
@@ -123,23 +110,15 @@ public class SessionController {
 
     @GetMapping("/coach/{coachId}")
     public ResponseEntity<List<SessionDTO>> getSessionsByCoach(@PathVariable Long coachId) {
-        List<SessionDTO> dtos = sessionService.findAllByCoachId(coachId)
-                .stream()
-                .map(this::toDto)
-                .toList();
+        List<SessionDTO> dtos = sessionService.findAllByCoachId(coachId).stream().map(this::toDto).toList();
         return ResponseEntity.ok(dtos);
     }
 
     @GetMapping("/filtered")
-    public ResponseEntity<List<SessionDTO>> getFiltered(
-            @RequestParam SessionDayFilter filter,
-            @RequestParam(required = false) Long coachId
-    ) {
+    public ResponseEntity<List<SessionDTO>> getFiltered(@RequestParam SessionDayFilter filter, @RequestParam(required = false) Long coachId) {
         var range = sessionService.getRange(filter);
 
-        List<SessionEntity> sessions = (coachId != null)
-                ? sessionService.findByCoachAndRange(coachId, range.start(), range.end())
-                : sessionService.findByRange(range.start(), range.end());
+        List<SessionEntity> sessions = (coachId != null) ? sessionService.findByCoachAndRange(coachId, range.start(), range.end()) : sessionService.findByRange(range.start(), range.end());
 
         List<SessionDTO> dtos = sessions.stream().map(this::toDto).toList();
         return ResponseEntity.ok(dtos);
@@ -153,22 +132,17 @@ public class SessionController {
     @GetMapping("/today-view")
     public ResponseEntity<List<SessionDTO>> todayView() {
 
-        var auth = org.springframework.security.core.context.SecurityContextHolder
-                .getContext()
-                .getAuthentication();
+        var auth = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
 
-        boolean isAdmin = auth.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+        boolean isAdmin = auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
 
-        boolean isCoach = auth.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_COACH"));
+        boolean isCoach = auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_COACH"));
 
         List<SessionEntity> sessions;
 
         if (isAdmin) {
-            sessions = sessionService.findTodayAll(); // azi pentru toți
+            sessions = sessionService.findTodayAll();
         } else if (isCoach) {
-            // scoți coachId din principal (adaptează la cum ai tu)
             Long coachId = null;
 
             Object principal = auth.getPrincipal();
@@ -180,20 +154,12 @@ public class SessionController {
                 return ResponseEntity.status(403).build();
             }
 
-            sessions = sessionService.findTodayByCoach(coachId); // azi doar pt el
+            sessions = sessionService.findTodayByCoach(coachId);
         } else {
             return ResponseEntity.status(403).build();
         }
 
         return ResponseEntity.ok(sessions.stream().map(this::toDto).toList());
     }
-
-
-
-
-
-
-
-
 
 }

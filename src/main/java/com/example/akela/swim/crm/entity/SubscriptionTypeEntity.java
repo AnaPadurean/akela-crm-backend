@@ -2,10 +2,14 @@ package com.example.akela.swim.crm.entity;
 
 import jakarta.persistence.*;
 import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "akl_dd_subscription_type")
 public class SubscriptionTypeEntity {
@@ -15,7 +19,7 @@ public class SubscriptionTypeEntity {
     @Column(name = "subscription_type_id")
     private Long subscriptionTypeId;
 
-    private String code; // ex: INDIVIDUAL, MINIGRUP
+    private String code;
     private String name;
     private Integer maxChildren;
     private String description;
@@ -23,51 +27,4 @@ public class SubscriptionTypeEntity {
     @OneToMany(mappedBy = "subscriptionType", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<SubscriptionPlanEntity> plans = new HashSet<>();
 
-    public Long getSubscriptionTypeId() {
-        return subscriptionTypeId;
-    }
-
-    public void setSubscriptionTypeId(Long subscriptionTypesId) {
-        this.subscriptionTypeId = subscriptionTypesId;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getMaxChildren() {
-        return maxChildren;
-    }
-
-    public void setMaxChildren(Integer maxChildren) {
-        this.maxChildren = maxChildren;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Set<SubscriptionPlanEntity> getPlans() {
-        return plans;
-    }
-
-    public void setPlans(Set<SubscriptionPlanEntity> plans) {
-        this.plans = plans;
-    }
 }

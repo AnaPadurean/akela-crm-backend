@@ -36,19 +36,14 @@ public class ExpenseController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<ExpenseEntity>> search(
-            @RequestParam String from,
-            @RequestParam String to
-    ) {
+    public ResponseEntity<List<ExpenseEntity>> search(@RequestParam String from, @RequestParam String to) {
         return ResponseEntity.ok(expenseService.findByRange(from, to));
     }
 
 
     @GetMapping("/{id}")
     public ResponseEntity<ExpenseDTO> getById(@PathVariable Long id) {
-        return expenseService.findById(id)
-                .map(e -> ResponseEntity.ok(toDto(e)))
-                .orElse(ResponseEntity.notFound().build());
+        return expenseService.findById(id).map(e -> ResponseEntity.ok(toDto(e))).orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -70,8 +65,7 @@ public class ExpenseController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody CreateExpenseDTO dto) {
         try {
-            ExpenseEntity existing = expenseService.findById(id)
-                    .orElseThrow(() -> new RuntimeException("Expense not found"));
+            ExpenseEntity existing = expenseService.findById(id).orElseThrow(() -> new RuntimeException("Expense not found"));
 
             existing.setTitle(dto.getTitle());
             existing.setExpenseDate(dto.getExpenseDate());

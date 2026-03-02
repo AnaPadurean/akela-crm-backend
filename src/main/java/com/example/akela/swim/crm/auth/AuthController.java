@@ -113,7 +113,5 @@ public class AuthController {
         passwordResetService.resetPassword(req.token(), req.newPassword());
         return ResponseEntity.noContent().build();
     }
-
-
 }
 

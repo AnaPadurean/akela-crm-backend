@@ -11,10 +11,9 @@ public class StandardTrainingSessionDTO {
     private Long id;
     private List<Long> childIds;
     private Long coachId;
-    private Integer dayOfWeek;      // 1 = luni ... 7 = duminica
+    private Integer dayOfWeek;
     private LocalTime startTime;
     private LocalTime endTime;
     private String notes;
-
 
 }

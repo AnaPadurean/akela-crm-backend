@@ -11,8 +11,7 @@ public class ChildAssocDTO {
     String childFirstName;
     String childLastName;
 
-    public ChildAssocDTO(Long parentChildId, Long childId, String relationshipType, boolean legalGuardian,
-                         String childFirstName, String childLastName) {
+    public ChildAssocDTO(Long parentChildId, Long childId, String relationshipType, boolean legalGuardian, String childFirstName, String childLastName) {
         this.parentChildId = parentChildId;
         this.childId = childId;
         this.relationshipType = relationshipType;

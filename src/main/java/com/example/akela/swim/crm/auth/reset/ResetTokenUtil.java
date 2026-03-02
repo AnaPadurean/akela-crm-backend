@@ -8,7 +8,8 @@ import java.util.Base64;
 public final class ResetTokenUtil {
     private static final SecureRandom RNG = new SecureRandom();
 
-    private ResetTokenUtil() {}
+    private ResetTokenUtil() {
+    }
 
     public static String generateRawToken() {
         byte[] bytes = new byte[32];

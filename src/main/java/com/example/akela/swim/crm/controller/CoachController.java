@@ -20,24 +20,19 @@ public class CoachController {
         this.coachService = coachService;
     }
 
-    // LISTARE PENTRU UI (Coach + locationIds)
     @GetMapping("/flattened")
     public ResponseEntity<List<CoachListDTO>> getAllFlattened() {
         return ResponseEntity.ok(coachService.findAllFlattened());
     }
 
-    // (optional) Coachi per locație
     @GetMapping("/by-location/{locationId}")
     public ResponseEntity<List<CoachListDTO>> getByLocation(@PathVariable Long locationId) {
         return ResponseEntity.ok(coachService.findByLocationId(locationId));
     }
 
-    // Dacă încă vrei entități brute pentru debugging:
     @GetMapping("/{id}")
     public ResponseEntity<CoachEntity> getCoachById(@PathVariable Long id) {
-        return coachService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return coachService.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping

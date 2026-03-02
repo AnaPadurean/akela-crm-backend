@@ -1,4 +1,4 @@
-package com.example.akela.swim.crm.controller;
+package com.example.akela.swim.crm.controller.schedule;
 
 import com.example.akela.swim.crm.dto.StandardTrainingSessionDTO;
 import com.example.akela.swim.crm.entity.StandardTrainingSessionEntity;
@@ -24,9 +24,7 @@ public class StandardTrainingSessionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<StandardTrainingSessionEntity> update(
-            @PathVariable Long id,
-            @RequestBody StandardTrainingSessionDTO dto) {
+    public ResponseEntity<StandardTrainingSessionEntity> update(@PathVariable Long id, @RequestBody StandardTrainingSessionDTO dto) {
         dto.setId(id);
         return ResponseEntity.ok(service.update(id, dto));
     }
@@ -41,6 +39,5 @@ public class StandardTrainingSessionController {
     public ResponseEntity<List<StandardTrainingSessionEntity>> getAll() {
         return ResponseEntity.ok(service.findAll());
     }
-
 
 }

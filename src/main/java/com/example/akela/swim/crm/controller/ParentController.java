@@ -27,9 +27,7 @@ public class ParentController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ParentEntity> getParentById(@PathVariable Long id) {
-        return parentService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return parentService.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -39,12 +37,10 @@ public class ParentController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ParentEntity> updateParent(@PathVariable Long id, @RequestBody ParentEntity parentEntity) {
-        return parentService.findById(id)
-                .map(existing -> {
-                    parentEntity.setParentId(id);
-                    return ResponseEntity.ok(parentService.save(parentEntity));
-                })
-                .orElse(ResponseEntity.notFound().build());
+        return parentService.findById(id).map(existing -> {
+            parentEntity.setParentId(id);
+            return ResponseEntity.ok(parentService.save(parentEntity));
+        }).orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
@@ -62,6 +58,5 @@ public class ParentController {
     public ResponseEntity<List<ParentListDTO>> getAllParentsForList() {
         return ResponseEntity.ok(parentService.findAllForList());
     }
-
 
 }

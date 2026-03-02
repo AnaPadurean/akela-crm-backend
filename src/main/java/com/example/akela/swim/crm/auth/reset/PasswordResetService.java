@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
+
 @Transactional
 @Service
 @RequiredArgsConstructor
@@ -29,12 +30,8 @@ public class PasswordResetService {
 
     public void requestReset(String emailRaw) {
         String email = emailRaw.trim().toLowerCase();
-
-        // răspunsul trebuie să fie “generic”; aici doar facem logic dacă user există
         userRepo.findByEmailIgnoreCase(email).ifPresent(user -> {
-            // optional: invalidează tokenurile vechi
             tokenRepo.deleteByUserId(user.getId());
-
             String rawToken = ResetTokenUtil.generateRawToken();
             String tokenHash = ResetTokenUtil.sha256Hex(rawToken);
 
@@ -80,7 +77,5 @@ public class PasswordResetService {
 
         t.setUsedAt(OffsetDateTime.now());
         tokenRepo.save(t);
-
-
     }
 }

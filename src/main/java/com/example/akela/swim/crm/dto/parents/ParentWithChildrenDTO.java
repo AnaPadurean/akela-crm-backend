@@ -1,7 +1,10 @@
 package com.example.akela.swim.crm.dto.parents;
 
+import lombok.Getter;
+
 import java.util.List;
 
+@Getter
 public class ParentWithChildrenDTO {
 
     private Long parentId;
@@ -10,10 +13,9 @@ public class ParentWithChildrenDTO {
     private String phone;
     private String email;
     private String address;
-    private List<String> children; // ex: ["Andrei Popescu", "Ioana Popescu"]
+    private List<String> children;
 
-    public ParentWithChildrenDTO(Long parentId, String parentFirstName, String parentLastName,
-                                 String phone, String email, String address, List<String> children) {
+    public ParentWithChildrenDTO(Long parentId, String parentFirstName, String parentLastName, String phone, String email, String address, List<String> children) {
         this.parentId = parentId;
         this.parentFirstName = parentFirstName;
         this.parentLastName = parentLastName;
@@ -23,11 +25,4 @@ public class ParentWithChildrenDTO {
         this.children = children;
     }
 
-    public Long getParentId() { return parentId; }
-    public String getParentFirstName() { return parentFirstName; }
-    public String getParentLastName() { return parentLastName; }
-    public String getPhone() { return phone; }
-    public String getEmail() { return email; }
-    public String getAddress() { return address; }
-    public List<String> getChildren() { return children; }
 }
