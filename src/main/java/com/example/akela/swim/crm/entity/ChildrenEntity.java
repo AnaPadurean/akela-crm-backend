@@ -1,5 +1,6 @@
 package com.example.akela.swim.crm.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,6 +40,7 @@ public class ChildrenEntity {
     private boolean status = true;
 
     @Setter
+    @JsonIgnore
     @OneToMany(mappedBy = "child", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ChildParentAssocEntity> parentChildren = new HashSet<>();
 

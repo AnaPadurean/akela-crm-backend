@@ -3,7 +3,7 @@ package com.example.akela.swim.crm.controller;
 import com.example.akela.swim.crm.dto.MonthCountDTO;
 import com.example.akela.swim.crm.dto.SessionDTO;
 import com.example.akela.swim.crm.entity.SessionEntity;
-import com.example.akela.swim.crm.entity.SubscriptionEntity;
+import com.example.akela.swim.crm.mapper.SessionMapper;
 import com.example.akela.swim.crm.model.SessionDayFilter;
 import com.example.akela.swim.crm.service.reports.AnalyticsSessionsService;
 import com.example.akela.swim.crm.service.reservations.ReservationService;
@@ -23,62 +23,43 @@ public class SessionController {
     private final SubscriptionService subscriptionService;
     private final ReservationService reservationService;
     private final AnalyticsSessionsService analyticsSessionsService;
+    private final SessionMapper sessionMapper;
 
-    public SessionController(SessionService sessionService, SubscriptionService subscriptionService, ReservationService reservationService, AnalyticsSessionsService analyticsSessionsService) {
+    public SessionController(
+            SessionService sessionService,
+            SubscriptionService subscriptionService,
+            ReservationService reservationService,
+            AnalyticsSessionsService analyticsSessionsService,
+            SessionMapper sessionMapper
+    ) {
         this.sessionService = sessionService;
         this.subscriptionService = subscriptionService;
         this.reservationService = reservationService;
         this.analyticsSessionsService = analyticsSessionsService;
-    }
-
-    private SessionDTO toDto(SessionEntity s) {
-        SessionDTO dto = new SessionDTO();
-        dto.setSessionId(s.getSessionId());
-        dto.setScheduledDate(s.getScheduledDate());
-        dto.setCompleted(s.getCompleted());
-        dto.setCanceled(s.getCanceled());
-
-        if (s.getSubscription() != null) {
-            SubscriptionEntity sub = s.getSubscription();
-            dto.setSubscriptionId(sub.getSubscriptionId());
-            dto.setSubscriptionStatus(sub.getStatus());
-            dto.setTotalSessions(sub.getTotalSessions());
-            dto.setCompletedSessions(sub.getCompletedSessions());
-            dto.setRemainingSessions(sub.getRemainingSessions());
-
-            if (sub.getChild() != null) {
-                dto.setChildFullName(sub.getChild().getChildLastName() + " " + sub.getChild().getChildFirstName());
-            }
-        }
-
-        if (s.getReservation() != null && s.getReservation().getCoach() != null) {
-            dto.setCoachId(s.getReservation().getCoach().getCoachId());
-            dto.setCoachFullName(s.getReservation().getCoach().getCoachLastName() + " " + s.getReservation().getCoach().getCoachFirstName());
-        } else if (s.getSubscription() != null && s.getSubscription().getCoach() != null) {
-            dto.setCoachId(s.getSubscription().getCoach().getCoachId());
-            dto.setCoachFullName(s.getSubscription().getCoach().getCoachLastName() + " " + s.getSubscription().getCoach().getCoachFirstName());
-        }
-
-        return dto;
+        this.sessionMapper = sessionMapper;
     }
 
 
     @GetMapping
     public ResponseEntity<List<SessionDTO>> getAllSessions() {
-        List<SessionDTO> dtos = sessionService.findAll().stream().map(this::toDto).toList();
+        List<SessionDTO> dtos = sessionService.findAll().stream().map(sessionMapper::toDto).toList();
         return ResponseEntity.ok(dtos);
     }
 
 
     @GetMapping("/{id}")
     public ResponseEntity<SessionDTO> getSessionById(@PathVariable Long id) {
-        return sessionService.findById(id).map(s -> ResponseEntity.ok(toDto(s))).orElse(ResponseEntity.notFound().build());
+        return sessionService.findById(id)
+                .map(sessionMapper::toDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
 
     @PostMapping
-    public ResponseEntity<SessionEntity> createSession(@RequestBody SessionEntity sessionEntity) {
-        return ResponseEntity.ok(sessionService.save(sessionEntity));
+    public ResponseEntity<SessionDTO> createSession(@RequestBody SessionEntity sessionEntity) {
+        SessionEntity saved = sessionService.save(sessionEntity);
+        return ResponseEntity.ok(sessionMapper.toDto(saved));
     }
 
     @PutMapping("/{id}/complete")
@@ -110,7 +91,7 @@ public class SessionController {
 
     @GetMapping("/coach/{coachId}")
     public ResponseEntity<List<SessionDTO>> getSessionsByCoach(@PathVariable Long coachId) {
-        List<SessionDTO> dtos = sessionService.findAllByCoachId(coachId).stream().map(this::toDto).toList();
+        List<SessionDTO> dtos = sessionService.findAllByCoachId(coachId).stream().map(sessionMapper::toDto).toList();
         return ResponseEntity.ok(dtos);
     }
 
@@ -120,7 +101,7 @@ public class SessionController {
 
         List<SessionEntity> sessions = (coachId != null) ? sessionService.findByCoachAndRange(coachId, range.start(), range.end()) : sessionService.findByRange(range.start(), range.end());
 
-        List<SessionDTO> dtos = sessions.stream().map(this::toDto).toList();
+        List<SessionDTO> dtos = sessions.stream().map(sessionMapper::toDto).toList();
         return ResponseEntity.ok(dtos);
     }
 
@@ -159,7 +140,7 @@ public class SessionController {
             return ResponseEntity.status(403).build();
         }
 
-        return ResponseEntity.ok(sessions.stream().map(this::toDto).toList());
+        return ResponseEntity.ok(sessions.stream().map(sessionMapper::toDto).toList());
     }
 
 }

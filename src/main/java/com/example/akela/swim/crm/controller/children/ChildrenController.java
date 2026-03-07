@@ -1,7 +1,9 @@
 package com.example.akela.swim.crm.controller.children;
 
 import com.example.akela.swim.crm.dto.children.ChildWithCoachesAndSubscriptionsDTO;
+import com.example.akela.swim.crm.dto.children.ChildResponseDTO;
 import com.example.akela.swim.crm.entity.ChildrenEntity;
+import com.example.akela.swim.crm.mapper.ChildrenMapper;
 import com.example.akela.swim.crm.service.children.ChildrenService;
 import com.example.akela.swim.crm.service.children.ChildrenStatsService;
 import com.example.akela.swim.crm.service.subscriptions.SubscriptionService;
@@ -21,11 +23,18 @@ public class ChildrenController {
     private final ChildrenService childrenService;
     private final SubscriptionService subscriptionService;
     private final ChildrenStatsService childrenStatsService;
+    private final ChildrenMapper childrenMapper;
 
-    public ChildrenController(ChildrenService childrenService, SubscriptionService subscriptionService, ChildrenStatsService childrenStatsService) {
+    public ChildrenController(
+            ChildrenService childrenService,
+            SubscriptionService subscriptionService,
+            ChildrenStatsService childrenStatsService,
+            ChildrenMapper childrenMapper
+    ) {
         this.childrenService = childrenService;
         this.subscriptionService = subscriptionService;
         this.childrenStatsService = childrenStatsService;
+        this.childrenMapper = childrenMapper;
     }
 
     @GetMapping("/stats/active-count")
@@ -73,25 +82,33 @@ public class ChildrenController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ChildrenEntity>> getAllChildren() {
-        return ResponseEntity.ok(childrenService.findAll());
+    public ResponseEntity<List<ChildResponseDTO>> getAllChildren() {
+        List<ChildResponseDTO> dtos = childrenService.findAll().stream()
+                .map(childrenMapper::toDto)
+                .toList();
+        return ResponseEntity.ok(dtos);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ChildrenEntity> getChildById(@PathVariable Long id) {
-        return childrenService.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<ChildResponseDTO> getChildById(@PathVariable Long id) {
+        return childrenService.findById(id)
+                .map(childrenMapper::toDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<ChildrenEntity> createChild(@RequestBody ChildrenEntity child) {
-        return ResponseEntity.ok(childrenService.save(child));
+    public ResponseEntity<ChildResponseDTO> createChild(@RequestBody ChildrenEntity child) {
+        ChildrenEntity saved = childrenService.save(child);
+        return ResponseEntity.ok(childrenMapper.toDto(saved));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ChildrenEntity> updateChild(@PathVariable Long id, @RequestBody ChildrenEntity updatedChild) {
+    public ResponseEntity<ChildResponseDTO> updateChild(@PathVariable Long id, @RequestBody ChildrenEntity updatedChild) {
         return childrenService.findById(id).map(existing -> {
             updatedChild.setChildId(id);
-            return ResponseEntity.ok(childrenService.save(updatedChild));
+            ChildrenEntity saved = childrenService.save(updatedChild);
+            return ResponseEntity.ok(childrenMapper.toDto(saved));
         }).orElse(ResponseEntity.notFound().build());
     }
 

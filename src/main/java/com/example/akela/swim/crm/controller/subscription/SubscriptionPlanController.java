@@ -4,6 +4,7 @@ import com.example.akela.swim.crm.dto.CreateSubscriptionPlanDTO;
 import com.example.akela.swim.crm.dto.subscription.SubscriptionPlanDTO;
 import com.example.akela.swim.crm.entity.SubscriptionPlanEntity;
 import com.example.akela.swim.crm.entity.SubscriptionTypeEntity;
+import com.example.akela.swim.crm.mapper.SubscriptionPlanMapper;
 import com.example.akela.swim.crm.service.subscriptions.SubscriptionPlanService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,29 +17,30 @@ import java.util.List;
 public class SubscriptionPlanController {
 
     private final SubscriptionPlanService subscriptionPlanService;
+    private final SubscriptionPlanMapper subscriptionPlanMapper;
 
-    public SubscriptionPlanController(SubscriptionPlanService subscriptionPlanService) {
+    public SubscriptionPlanController(
+            SubscriptionPlanService subscriptionPlanService,
+            SubscriptionPlanMapper subscriptionPlanMapper
+    ) {
         this.subscriptionPlanService = subscriptionPlanService;
+        this.subscriptionPlanMapper = subscriptionPlanMapper;
     }
 
     @GetMapping
     public ResponseEntity<List<SubscriptionPlanDTO>> getAllSubscriptionPlans() {
-        List<SubscriptionPlanDTO> dtos = subscriptionPlanService.findAll().stream().map(plan -> {
-            SubscriptionPlanDTO dto = new SubscriptionPlanDTO();
-            dto.setSubscriptionPlanId(plan.getSubscriptionPlanId());
-            dto.setSessions(plan.getSessions());
-            dto.setPrice(plan.getPrice());
-            dto.setActive(plan.isActive());
-            dto.setSubscriptionTypeId(plan.getSubscriptionType() != null ? plan.getSubscriptionType().getSubscriptionTypeId() : null);
-            dto.setSubscriptionTypeName(plan.getSubscriptionType() != null ? plan.getSubscriptionType().getName() : "-");
-            return dto;
-        }).toList();
+        List<SubscriptionPlanDTO> dtos = subscriptionPlanService.findAll().stream()
+                .map(subscriptionPlanMapper::toDto)
+                .toList();
         return ResponseEntity.ok(dtos);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SubscriptionPlanEntity> getSubscriptionPlansById(@PathVariable Long id) {
-        return subscriptionPlanService.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<SubscriptionPlanDTO> getSubscriptionPlansById(@PathVariable Long id) {
+        return subscriptionPlanService.findById(id)
+                .map(subscriptionPlanMapper::toDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -53,16 +55,7 @@ public class SubscriptionPlanController {
             plan.setActive(dto.isActive());
 
             SubscriptionPlanEntity saved = subscriptionPlanService.save(plan);
-
-            SubscriptionPlanDTO responseDto = new SubscriptionPlanDTO();
-            responseDto.setSubscriptionPlanId(saved.getSubscriptionPlanId());
-            responseDto.setSessions(saved.getSessions());
-            responseDto.setPrice(saved.getPrice());
-            responseDto.setActive(saved.isActive());
-            responseDto.setSubscriptionTypeId(type.getSubscriptionTypeId());
-            responseDto.setSubscriptionTypeName(type.getName());
-
-            return ResponseEntity.ok(responseDto);
+            return ResponseEntity.ok(subscriptionPlanMapper.toDto(saved));
 
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("Eroare la salvare: " + e.getMessage());
@@ -82,16 +75,7 @@ public class SubscriptionPlanController {
                 existing.setActive(dto.isActive());
 
                 SubscriptionPlanEntity updated = subscriptionPlanService.save(existing);
-
-                SubscriptionPlanDTO responseDto = new SubscriptionPlanDTO();
-                responseDto.setSubscriptionPlanId(updated.getSubscriptionPlanId());
-                responseDto.setSessions(updated.getSessions());
-                responseDto.setPrice(updated.getPrice());
-                responseDto.setActive(updated.isActive());
-                responseDto.setSubscriptionTypeId(type.getSubscriptionTypeId());
-                responseDto.setSubscriptionTypeName(type.getName());
-
-                return ResponseEntity.ok(responseDto);
+                return ResponseEntity.ok(subscriptionPlanMapper.toDto(updated));
 
             } catch (Exception e) {
                 return ResponseEntity.internalServerError().body("Eroare la actualizare: " + e.getMessage());

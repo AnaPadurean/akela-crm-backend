@@ -1,10 +1,12 @@
 package com.example.akela.swim.crm.controller.children;
 
 import com.example.akela.swim.crm.dto.children.ChildAssocDTO;
+import com.example.akela.swim.crm.dto.children.ChildParentAssocResponseDTO;
 import com.example.akela.swim.crm.dto.children.CreateChildParentAssocDTO;
 import com.example.akela.swim.crm.entity.ChildParentAssocEntity;
 import com.example.akela.swim.crm.entity.ChildrenEntity;
 import com.example.akela.swim.crm.entity.ParentEntity;
+import com.example.akela.swim.crm.mapper.ChildParentAssocMapper;
 import com.example.akela.swim.crm.service.children.ChildParentAssocService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,19 +19,28 @@ import java.util.List;
 public class ChildParentAssocController {
 
     private final ChildParentAssocService childParentAssocService;
+    private final ChildParentAssocMapper childParentAssocMapper;
 
-    public ChildParentAssocController(ChildParentAssocService childParentAssocService) {
+    public ChildParentAssocController(
+            ChildParentAssocService childParentAssocService,
+            ChildParentAssocMapper childParentAssocMapper
+    ) {
         this.childParentAssocService = childParentAssocService;
+        this.childParentAssocMapper = childParentAssocMapper;
     }
 
     @GetMapping
-    public ResponseEntity<List<ChildParentAssocEntity>> getAllChildParentAssoc() {
-        return ResponseEntity.ok(childParentAssocService.findAll());
+    public ResponseEntity<List<ChildParentAssocResponseDTO>> getAllChildParentAssoc() {
+        List<ChildParentAssocResponseDTO> dtos = childParentAssocService.findAll().stream()
+                .map(childParentAssocMapper::toDto)
+                .toList();
+        return ResponseEntity.ok(dtos);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ChildParentAssocEntity> getChildParentAssocById(@PathVariable Long id) {
+    public ResponseEntity<ChildParentAssocResponseDTO> getChildParentAssocById(@PathVariable Long id) {
         return childParentAssocService.findById(id)
+                .map(childParentAssocMapper::toDto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -63,7 +74,7 @@ public class ChildParentAssocController {
 
 
             var saved = childParentAssocService.save(assoc);
-            return ResponseEntity.ok(saved);
+            return ResponseEntity.ok(childParentAssocMapper.toDto(saved));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -74,11 +85,12 @@ public class ChildParentAssocController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<ChildParentAssocEntity> updateChildParentAssoc(@PathVariable Long id, @RequestBody ChildParentAssocEntity childParentAssocEntity) {
+    public ResponseEntity<ChildParentAssocResponseDTO> updateChildParentAssoc(@PathVariable Long id, @RequestBody ChildParentAssocEntity childParentAssocEntity) {
         return childParentAssocService.findById(id)
                 .map(existing -> {
                     childParentAssocEntity.setParentChildId(id);
-                    return ResponseEntity.ok(childParentAssocService.save(childParentAssocEntity));
+                    ChildParentAssocEntity saved = childParentAssocService.save(childParentAssocEntity);
+                    return ResponseEntity.ok(childParentAssocMapper.toDto(saved));
                 })
                 .orElse(ResponseEntity.notFound().build());
     }

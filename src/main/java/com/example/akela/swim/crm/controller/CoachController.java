@@ -1,8 +1,10 @@
 package com.example.akela.swim.crm.controller;
 
+import com.example.akela.swim.crm.dto.CoachDTO;
 import com.example.akela.swim.crm.dto.CoachListDTO;
 import com.example.akela.swim.crm.dto.CreateUpdateCoachDTO;
 import com.example.akela.swim.crm.entity.CoachEntity;
+import com.example.akela.swim.crm.mapper.CoachMapper;
 import com.example.akela.swim.crm.service.coach.CoachService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +17,11 @@ import java.util.List;
 public class CoachController {
 
     private final CoachService coachService;
+    private final CoachMapper coachMapper;
 
-    public CoachController(CoachService coachService) {
+    public CoachController(CoachService coachService, CoachMapper coachMapper) {
         this.coachService = coachService;
+        this.coachMapper = coachMapper;
     }
 
     @GetMapping("/flattened")
@@ -31,18 +35,23 @@ public class CoachController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CoachEntity> getCoachById(@PathVariable Long id) {
-        return coachService.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<CoachDTO> getCoachById(@PathVariable Long id) {
+        return coachService.findById(id)
+                .map(coachMapper::toDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<CoachEntity> createCoach(@RequestBody CreateUpdateCoachDTO dto) {
-        return ResponseEntity.ok(coachService.createCoach(dto));
+    public ResponseEntity<CoachDTO> createCoach(@RequestBody CreateUpdateCoachDTO dto) {
+        CoachEntity saved = coachService.createCoach(dto);
+        return ResponseEntity.ok(coachMapper.toDto(saved));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CoachEntity> updateCoach(@PathVariable Long id, @RequestBody CreateUpdateCoachDTO dto) {
-        return ResponseEntity.ok(coachService.updateCoach(id, dto));
+    public ResponseEntity<CoachDTO> updateCoach(@PathVariable Long id, @RequestBody CreateUpdateCoachDTO dto) {
+        CoachEntity updated = coachService.updateCoach(id, dto);
+        return ResponseEntity.ok(coachMapper.toDto(updated));
     }
 
     @DeleteMapping("/{id}")
