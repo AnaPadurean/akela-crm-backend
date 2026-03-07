@@ -20,12 +20,12 @@ public class ChildParentAssocEntity {
     @Column(name = "assoc_parent_child_id")
     private Long parentChildId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "parent_id", nullable = false)
     @JsonIgnore
     private ParentEntity parent;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "child_id", nullable = false)
     @JsonIgnore
     private ChildrenEntity child;

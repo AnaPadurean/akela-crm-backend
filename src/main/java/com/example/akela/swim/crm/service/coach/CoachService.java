@@ -30,7 +30,6 @@ public class CoachService {
         this.coachLocationAssocRepository = coachLocationAssocRepository;
     }
 
-    // LISTARE “flattened” pentru UI (evită circular/LAZY issues)
     @Transactional(readOnly = true)
     public List<CoachListDTO> findAllFlattened() {
         List<CoachEntity> coaches = coachRepository.findAll();
@@ -108,7 +107,6 @@ public class CoachService {
             LocationEntity location = locationRepository.findById(locationId)
                     .orElseThrow(() -> new RuntimeException("Location not found: " + locationId));
 
-            // (optional) protecție în plus dacă nu ai unique constraint încă:
             if (coachLocationAssocRepository.existsByCoach_CoachIdAndLocation_LocationId(
                     coach.getCoachId(), locationId)) {
                 continue;
@@ -129,7 +127,6 @@ public class CoachService {
         coachRepository.deleteById(id);
     }
 
-    // util: coachi dintr-o locație
     @Transactional(readOnly = true)
     public List<CoachListDTO> findByLocationId(Long locationId) {
         List<CoachLocationAssocEntity> assocs = coachLocationAssocRepository.findByLocation_LocationId(locationId);

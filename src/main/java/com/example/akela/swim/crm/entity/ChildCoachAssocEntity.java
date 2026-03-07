@@ -20,12 +20,12 @@ public class ChildCoachAssocEntity {
     @Column(name = "assoc_coach_child_id")
     private Long coachChildId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "child_id", nullable = false)
     @JsonIgnore
     private ChildrenEntity child;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "coach_id", nullable = false)
     @JsonIgnore
     private CoachEntity coach;

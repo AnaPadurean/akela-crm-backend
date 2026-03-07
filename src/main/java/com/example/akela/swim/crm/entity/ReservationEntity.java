@@ -17,19 +17,19 @@ public class ReservationEntity {
     @Column(name = "reservation_id")
     private Long reservationId;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "session_id", nullable = true)
     private SessionEntity session;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "coach_id", nullable = false)
     private CoachEntity coach;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "child_id", nullable = false)
     private ChildrenEntity child;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "subscription_id", nullable = false)
     private SubscriptionEntity subscription;
 
@@ -37,7 +37,7 @@ public class ReservationEntity {
 
     private String status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "weekly_training_session_id")
     private WeeklyTrainingSessionEntity weeklyTrainingSession;
 

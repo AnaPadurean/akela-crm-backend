@@ -20,17 +20,17 @@ public class SubscriptionEntity {
     private Long subscriptionId;
 
     @Setter
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "child_id", nullable = false)
     private ChildrenEntity child;
 
     @Setter
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "coach_id")
     private CoachEntity coach;
 
     @Setter
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "subscription_plan_id", nullable = false)
     private SubscriptionPlanEntity plan;
 

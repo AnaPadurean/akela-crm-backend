@@ -18,7 +18,7 @@ public class SessionEntity {
     @Column(name = "session_id")
     private Long sessionId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "subscription_id", nullable = true)
     private SubscriptionEntity subscription;
 

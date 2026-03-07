@@ -20,11 +20,11 @@ public class CoachLocationAssocEntity {
     @Column(name = "coach_location_assoc_id")
     private Long coachLocationAssocId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "coach_id", nullable = false)
     private CoachEntity coach;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "location_id", nullable = false)
     private LocationEntity location;
 
