@@ -45,6 +45,7 @@ public class ChildrenEntity {
     private Set<ChildParentAssocEntity> parentChildren = new HashSet<>();
 
     @Setter
+    @JsonIgnore
     @OneToMany(mappedBy = "child", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ChildCoachAssocEntity> coachChildren = new HashSet<>();
 

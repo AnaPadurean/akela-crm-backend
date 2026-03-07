@@ -36,6 +36,10 @@ public class ChildCoachAssocService {
         return childCoachAssocRepository.findByCoach_CoachId(coachId);
     }
 
+    public List<ChildCoachAssocEntity> findByChildId(Long childId) {
+        return childCoachAssocRepository.findByChild_ChildId(childId);
+    }
+
     public boolean existsByCoachIdAndChildId(Long coachId, Long childId) {
         return childCoachAssocRepository.existsByCoach_CoachIdAndChild_ChildId(coachId, childId);
     }

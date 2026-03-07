@@ -4,6 +4,7 @@ import com.example.akela.swim.crm.dto.children.ChildWithCoachesAndSubscriptionsD
 import com.example.akela.swim.crm.dto.children.ChildResponseDTO;
 import com.example.akela.swim.crm.entity.ChildrenEntity;
 import com.example.akela.swim.crm.mapper.ChildrenMapper;
+import com.example.akela.swim.crm.service.children.ChildCoachAssocService;
 import com.example.akela.swim.crm.service.children.ChildrenService;
 import com.example.akela.swim.crm.service.children.ChildrenStatsService;
 import com.example.akela.swim.crm.service.subscriptions.SubscriptionService;
@@ -24,17 +25,20 @@ public class ChildrenController {
     private final SubscriptionService subscriptionService;
     private final ChildrenStatsService childrenStatsService;
     private final ChildrenMapper childrenMapper;
+    private final ChildCoachAssocService childCoachAssocService;
 
     public ChildrenController(
             ChildrenService childrenService,
             SubscriptionService subscriptionService,
             ChildrenStatsService childrenStatsService,
-            ChildrenMapper childrenMapper
+            ChildrenMapper childrenMapper,
+            ChildCoachAssocService childCoachAssocService
     ) {
         this.childrenService = childrenService;
         this.subscriptionService = subscriptionService;
         this.childrenStatsService = childrenStatsService;
         this.childrenMapper = childrenMapper;
+        this.childCoachAssocService = childCoachAssocService;
     }
 
     @GetMapping("/stats/active-count")
@@ -54,7 +58,9 @@ public class ChildrenController {
             dto.setChildLastName(child.getChildLastName());
             dto.setBirthday(child.getBirthday());
 
-            List<Map<String, Object>> coachList = child.getCoachChildren().stream().filter(cc -> cc.getCoach() != null).map(cc -> {
+            List<Map<String, Object>> coachList = childCoachAssocService.findByChildId(child.getChildId()).stream()
+                    .filter(cc -> cc.getCoach() != null)
+                    .map(cc -> {
                 Map<String, Object> map = new HashMap<>();
                 map.put("coachId", cc.getCoach().getCoachId());
                 map.put("coachFullName", cc.getCoach().getCoachLastName() + " " + cc.getCoach().getCoachFirstName());

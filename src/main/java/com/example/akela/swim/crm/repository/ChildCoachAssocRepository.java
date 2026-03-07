@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface ChildCoachAssocRepository extends JpaRepository<ChildCoachAssocEntity, Long> {
     List<ChildCoachAssocEntity> findByCoach_CoachId(Long coachId);
+    List<ChildCoachAssocEntity> findByChild_ChildId(Long childId);
     boolean existsByCoach_CoachIdAndChild_ChildId(Long coachId, Long childId);
 }
