@@ -121,7 +121,11 @@ public class WeeklyTrainingSessionService {
 
     @Transactional
     public void delete(Long id) {
-        reservationRepo.deleteByWeeklyTrainingSession_Id(id);
+        if (!weeklyRepo.existsById(id)) {
+            throw new RuntimeException("Weekly session not found " + id);
+        }
+
+        deleteReservationsAndSessionsForWeekly(id);
         weeklyRepo.deleteById(id);
     }
 
@@ -147,13 +151,13 @@ public class WeeklyTrainingSessionService {
 
         // UNCONFIRM
         if (!dto.isConfirmed()) {
-            reservationRepo.deleteByWeeklyTrainingSession_Id(weeklyId);
+            deleteReservationsAndSessionsForWeekly(weeklyId);
             weekly.setConfirmed(false);
             return weeklyRepo.save(weekly);
         }
 
         // CONFIRM (refaci rezervările)
-        reservationRepo.deleteByWeeklyTrainingSession_Id(weeklyId);
+        deleteReservationsAndSessionsForWeekly(weeklyId);
 
         if (dto.getReservations() != null) {
             for (ConfirmWeeklySessionDTO.ChildReservation r : dto.getReservations()) {
@@ -198,6 +202,12 @@ public class WeeklyTrainingSessionService {
 
         session.setReservation(saved);
         sessionService.save(session);
+    }
+
+    private void deleteReservationsAndSessionsForWeekly(Long weeklyId) {
+        List<Long> sessionIds = reservationRepo.findSessionIdsByWeeklyTrainingSessionId(weeklyId);
+        reservationRepo.deleteAllByWeeklyTrainingSessionId(weeklyId);
+        sessionService.deleteAllByIds(sessionIds);
     }
 
 

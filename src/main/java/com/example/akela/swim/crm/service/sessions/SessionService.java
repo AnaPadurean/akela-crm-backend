@@ -45,6 +45,14 @@ public class SessionService {
         sessionRepository.deleteById(id);
     }
 
+    @Transactional
+    public void deleteAllByIds(List<Long> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return;
+        }
+        sessionRepository.deleteAllByIdInBatch(ids);
+    }
+
     public List<SessionEntity> findAllByCoachId(Long coachId) {
         return sessionRepository.findByReservation_Coach_CoachId(coachId);
     }
